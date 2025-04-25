@@ -7,7 +7,7 @@ export default function FramedataTable() {
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        "http://localhost:3000/v1/framedata/tekken8/anna"
+        `${import.meta.env.VITE_BASE_API_URL}framedata/tekken8/anna`
       );
 
       if (response.status == 200) {
