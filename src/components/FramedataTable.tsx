@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Framedata } from "../../__types/apiResponse";
+import { Framedata } from "../__types/apiResponse";
 
 export default function FramedataTable() {
   const [framedata, setFramedata] = useState<Framedata[]>();
@@ -10,6 +10,7 @@ export default function FramedataTable() {
         `${import.meta.env.VITE_BASE_API_URL}framedata/tekken8/anna`
       );
 
+      return;
       if (response.status == 200) {
         const data = await response.json();
         setFramedata(data);
