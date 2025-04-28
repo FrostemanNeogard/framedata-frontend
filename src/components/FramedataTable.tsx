@@ -10,7 +10,6 @@ export default function FramedataTable() {
         `${import.meta.env.VITE_BASE_API_URL}framedata/tekken8/anna`
       );
 
-      return;
       if (response.status == 200) {
         const data = await response.json();
         setFramedata(data);
