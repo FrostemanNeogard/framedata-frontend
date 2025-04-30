@@ -11,14 +11,14 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DiscordBotImport } from './routes/discordBot'
+import { Route as BotImport } from './routes/bot'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const DiscordBotRoute = DiscordBotImport.update({
-  id: '/discordBot',
-  path: '/discordBot',
+const BotRoute = BotImport.update({
+  id: '/bot',
+  path: '/bot',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/discordBot': {
-      id: '/discordBot'
-      path: '/discordBot'
-      fullPath: '/discordBot'
-      preLoaderRoute: typeof DiscordBotImport
+    '/bot': {
+      id: '/bot'
+      path: '/bot'
+      fullPath: '/bot'
+      preLoaderRoute: typeof BotImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/discordBot': typeof DiscordBotRoute
+  '/bot': typeof BotRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/discordBot': typeof DiscordBotRoute
+  '/bot': typeof BotRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/discordBot': typeof DiscordBotRoute
+  '/bot': typeof BotRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/discordBot'
+  fullPaths: '/' | '/bot'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/discordBot'
-  id: '__root__' | '/' | '/discordBot'
+  to: '/' | '/bot'
+  id: '__root__' | '/' | '/bot'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DiscordBotRoute: typeof DiscordBotRoute
+  BotRoute: typeof BotRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DiscordBotRoute: DiscordBotRoute,
+  BotRoute: BotRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/discordBot"
+        "/bot"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/discordBot": {
-      "filePath": "discordBot.tsx"
+    "/bot": {
+      "filePath": "bot.tsx"
     }
   }
 }
