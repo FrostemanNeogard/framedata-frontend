@@ -1,15 +1,8 @@
-version: "3"
+version: "3.8"
+
 services:
-  web:
+  web-app:
     build: .
     ports:
-      - "8000:80"
-    volumes:
-      - .:/usr/share/nginx/html
-    networks:
-      - webnet
+      - "3000:80"
     restart: always
-
-networks:
-  webnet:
-    driver: bridge
