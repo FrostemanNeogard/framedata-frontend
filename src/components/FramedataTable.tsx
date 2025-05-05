@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { Framedata } from "../__types/apiResponse";
 
-export default function FramedataTable() {
+type FramedataTableProps = {
+  game: string;
+  character: string;
+};
+export default function FramedataTable({
+  game,
+  character,
+}: FramedataTableProps) {
   const [framedata, setFramedata] = useState<Framedata[]>();
 
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_API_URL}framedata/tekken8/anna`
+        `${import.meta.env.VITE_BASE_API_URL}framedata/${game}/${character}`
       );
 
       if (response.status == 200) {
@@ -15,7 +22,7 @@ export default function FramedataTable() {
         setFramedata(data);
       }
     })();
-  }, []);
+  }, [game, character]);
 
   return (
     <div>
