@@ -11,10 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SettingsImport } from './routes/settings'
 import { Route as BotImport } from './routes/bot'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const SettingsRoute = SettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const BotRoute = BotImport.update({
   id: '/bot',
@@ -46,6 +53,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BotImport
       parentRoute: typeof rootRoute
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +68,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bot': typeof BotRoute
+  '/settings': typeof SettingsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bot': typeof BotRoute
+  '/settings': typeof SettingsRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/bot': typeof BotRoute
+  '/settings': typeof SettingsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bot'
+  fullPaths: '/' | '/bot' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bot'
-  id: '__root__' | '/' | '/bot'
+  to: '/' | '/bot' | '/settings'
+  id: '__root__' | '/' | '/bot' | '/settings'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BotRoute: typeof BotRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BotRoute: BotRoute,
+  SettingsRoute: SettingsRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +116,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/bot"
+        "/bot",
+        "/settings"
       ]
     },
     "/": {
@@ -105,6 +125,9 @@ export const routeTree = rootRoute
     },
     "/bot": {
       "filePath": "bot.tsx"
+    },
+    "/settings": {
+      "filePath": "settings.tsx"
     }
   }
 }
