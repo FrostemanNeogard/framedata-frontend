@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+import { breakpoints } from "./src/config";
 
-const colors = {
+export const colors = {
   primary: "#21282E",
   primaryBright: "#323C45",
   secondary: "#F7F7F7",
@@ -23,6 +24,9 @@ export default {
       },
       fontFamily: {
         primary: '"Raleway", sans-serif',
+      },
+      screens: {
+        md: breakpoints.mobile,
       },
     },
   },
