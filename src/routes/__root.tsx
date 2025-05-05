@@ -9,7 +9,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <div className="min-h-dvh bg-primary font-primary text-primary grid grid-rows-[auto_1fr_auto] [&>*]:p-2">
+    <div className="min-h-dvh bg-primary font-primary text-primary grid grid-rows-[auto_1fr_auto] [&>*]:p-2 md:[&>*]:px-[20vmax]">
       <Header />
       <main>
         <Outlet />
