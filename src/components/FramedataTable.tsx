@@ -41,11 +41,11 @@ export default function FramedataTable({
       cell: (info) => info.getValue(),
     }),
     hitLevel: columnHelper.accessor("hit_level", {
-      header: "Hit Level",
+      header: isMobile ? "Level" : "Hit Level",
       cell: (info) => info.getValue(),
     }),
     damage: columnHelper.accessor("damage", {
-      header: "Damage",
+      header: isMobile ? "DMG" : "Damage",
       cell: (info) => info.getValue(),
     }),
     startup: columnHelper.accessor("startup", {
@@ -96,10 +96,16 @@ export default function FramedataTable({
     baseColumns.startup,
     columnHelper.display({
       id: "hbc",
-      header: "Hit/Block/Counter",
+      header: "NH/B/CH",
       cell: (info) => {
         const row = info.row.original;
-        return `${row.hit ?? "-"} / ${row.block ?? "-"} / ${row.counter ?? "-"}`;
+        return (
+          <>
+            <p>{row.hit}</p>
+            <p>{row.block}</p>
+            <p>{row.counter}</p>
+          </>
+        );
       },
       footer: () => "hbc",
     }),
@@ -113,7 +119,7 @@ export default function FramedataTable({
 
   return (
     <div>
-      <table className="w-full overflow-x-scroll [&_td]:py-2 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary">
+      <table className="w-full table-fixed overflow-x-scroll [&_td]:py-2 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
