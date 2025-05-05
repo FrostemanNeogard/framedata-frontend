@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import FramedataTable from "../components/FramedataTable";
 import { FormEvent, useState } from "react";
-import HorizontalDivider from "../components/HorizontalDivider";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
