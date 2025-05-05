@@ -43,9 +43,6 @@ export default function FramedataTable({
     hitLevel: columnHelper.accessor("hit_level", {
       header: "Hit Level",
       cell: (info) => info.getValue(),
-      minSize: 10,
-      size: 20,
-      maxSize: 25,
     }),
     damage: columnHelper.accessor("damage", {
       header: "Damage",
@@ -137,7 +134,7 @@ export default function FramedataTable({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id} className="break-all">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
