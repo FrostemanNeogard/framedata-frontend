@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import FramedataTable from "../components/FramedataTable";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -15,12 +15,13 @@ function RouteComponent() {
     character,
   });
 
-  const handleFormSubmit = (e: FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setPayload({ game, character });
+    const target = e.target as HTMLTextAreaElement;
+    setCharacter(target.value);
+    setPayload({ game, character: target.value });
   };
 
-  // TODO: Look into TanStack form
   return (
     <div className="flex flex-col gap-2">
       <form
@@ -43,10 +44,7 @@ function RouteComponent() {
         <select
           name="character-select"
           id="character-select"
-          onChange={(e) => {
-            setCharacter(e.target.value);
-            handleFormSubmit(e);
-          }}
+          onChange={handleFormSubmit}
         >
           <option value="alisa">Alisa</option>
           <option value="anna">Anna</option>
