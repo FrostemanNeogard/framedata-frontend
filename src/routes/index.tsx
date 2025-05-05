@@ -7,33 +7,25 @@ export const Route = createFileRoute("/")({
 });
 
 function RouteComponent() {
-  const [game, setGame] = useState<string>("tekken8");
-  const [character, setCharacter] = useState<string>("alisa");
-
-  const [payload, setPayload] = useState<{ game: string; character: string }>({
-    game,
-    character,
+  const [payload, setPayload] = useState({
+    game: "tekken8",
+    character: "alisa",
   });
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLTextAreaElement;
-    setCharacter(target.value);
-    setPayload({ game, character: target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setPayload((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <form
-        action=""
-        onSubmit={handleFormSubmit}
-        className="[&>select]:text-secondary grid grid-rows-2 grid-flow-col gap-x-2"
-      >
+      <form className="[&>select]:text-secondary grid grid-rows-2 grid-flow-col gap-x-2">
         <label htmlFor="game-select">Game</label>
         <select
-          name="game-select"
+          name="game"
           id="game-select"
-          onChange={(e) => setGame(e.target.value)}
+          value={payload.game}
+          onChange={handleChange}
         >
           <option value="tekken6">Tekken 6</option>
           <option value="tekkentag2">Tekken Tag Tournament 2</option>
@@ -42,9 +34,10 @@ function RouteComponent() {
         </select>
         <label htmlFor="character-select">Character</label>
         <select
-          name="character-select"
+          name="character"
           id="character-select"
-          onChange={handleFormSubmit}
+          value={payload.character}
+          onChange={handleChange}
         >
           <option value="alisa">Alisa</option>
           <option value="anna">Anna</option>
