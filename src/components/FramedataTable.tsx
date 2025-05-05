@@ -113,7 +113,7 @@ export default function FramedataTable({
 
   return (
     <div>
-      <table className="w-full [&_td]:py-2 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary">
+      <table className="w-full overflow-x-scroll [&_td]:py-2 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
