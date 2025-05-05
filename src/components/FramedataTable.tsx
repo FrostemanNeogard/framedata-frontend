@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import useScreenType from "../hooks/useScreenType";
 
 type FramedataTableProps = {
   game: string;
@@ -16,6 +17,8 @@ export default function FramedataTable({
   character,
 }: FramedataTableProps) {
   const [framedata, setFramedata] = useState<Framedata[]>([]);
+
+  const { isMobile } = useScreenType();
 
   useEffect(() => {
     (async () => {
@@ -32,64 +35,88 @@ export default function FramedataTable({
 
   const columnHelper = createColumnHelper<Framedata>();
 
-  const columns = [
-    columnHelper.accessor("input", {
+  const baseColumns = {
+    input: columnHelper.accessor("input", {
       header: "Input",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("hit_level", {
+    hitLevel: columnHelper.accessor("hit_level", {
       header: "Hit Level",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
+      minSize: 10,
+      size: 20,
+      maxSize: 25,
     }),
-    columnHelper.accessor("damage", {
+    damage: columnHelper.accessor("damage", {
       header: "Damage",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("startup", {
+    startup: columnHelper.accessor("startup", {
       header: "Startup",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("hit", {
+    hit: columnHelper.accessor("hit", {
       header: "Hit",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("block", {
+    block: columnHelper.accessor("block", {
       header: "Block",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("counter", {
+    counter: columnHelper.accessor("counter", {
       header: "Counter",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("notes", {
+    notes: columnHelper.accessor("notes", {
       header: "Notes",
       cell: (info) => (
-        <ul className="list-disc list-inside">
-          {info.getValue().map((note) => (
-            <li>{note}</li>
+        <ul>
+          {info.getValue().map((note, index) => (
+            <li key={`framedata-note-${index}`}>
+              {note.endsWith(".") ? note : `${note}.`}
+            </li>
           ))}
         </ul>
       ),
-      footer: (info) => info.column.id,
+    }),
+  };
+
+  const fullColumns = [
+    baseColumns.input,
+    baseColumns.hitLevel,
+    baseColumns.damage,
+    baseColumns.startup,
+    baseColumns.hit,
+    baseColumns.block,
+    baseColumns.counter,
+    baseColumns.notes,
+  ];
+
+  const simpleColumns = [
+    baseColumns.input,
+    baseColumns.hitLevel,
+    baseColumns.damage,
+    baseColumns.startup,
+    columnHelper.display({
+      id: "hbc",
+      header: "Hit/Block/Counter",
+      cell: (info) => {
+        const row = info.row.original;
+        return `${row.hit ?? "-"} / ${row.block ?? "-"} / ${row.counter ?? "-"}`;
+      },
+      footer: () => "hbc",
     }),
   ];
 
   const table = useReactTable<Framedata>({
     data: framedata,
-    columns,
+    columns: isMobile ? simpleColumns : fullColumns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <div>
-      <table className="w-full [&_td]:py-2 [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)]:bg-secondary">
+      <table className="w-full [&_td]:py-2 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -117,22 +144,6 @@ export default function FramedataTable({
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
       </table>
     </div>
   );
