@@ -13,7 +13,9 @@ export default {
     extend: {
       colors: {
         primary: colors.primary,
+        primaryText: colors.secondary,
         secondary: colors.primaryBright,
+        secondaryText: colors.primary,
       },
       textColor: {
         primary: colors.secondary,
