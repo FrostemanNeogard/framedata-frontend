@@ -63,7 +63,7 @@ function RouteComponent() {
   return (
     <div className="flex flex-col gap-2">
       <form
-        className="[&>select]:text-secondary grid grid-rows-2 grid-flow-col gap-x-2 py-5"
+        className="[&>select]:text-secondary grid grid-rows-2 grid-flow-col gap-x-2 py-5 grid-cols-3"
         onSubmit={handleSubmit}
       >
         <label htmlFor="game-select">Game</label>
