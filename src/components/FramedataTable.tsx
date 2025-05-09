@@ -7,6 +7,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import useScreenType from "../hooks/useScreenType";
+import HorizontalDivider from "./HorizontalDivider";
+import Throbber from "./Throbber";
 
 type FramedataTableProps = {
   game: string;
@@ -16,20 +18,30 @@ export default function FramedataTable({
   game,
   character,
 }: FramedataTableProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [framedata, setFramedata] = useState<Framedata[]>([]);
 
   const { isMobile } = useScreenType();
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BASE_API_URL}framedata/${game}/${character}`
       );
 
+      const data = await response.json();
       if (response.status == 200) {
-        const data = await response.json();
         setFramedata(data);
+      } else {
+        setError(
+          data?.message || "Something went wrong. Please try again later."
+        );
       }
+
+      setIsLoading(false);
     })();
   }, [game, character]);
 
@@ -89,6 +101,12 @@ export default function FramedataTable({
     baseColumns.notes,
   ];
 
+  const hbcHeaderClassnames = {
+    hit: "bg-green-400/50",
+    block: "bg-yellow-300/50",
+    counter: "bg-blue-400/50",
+  };
+
   const simpleColumns = [
     baseColumns.input,
     baseColumns.hitLevel,
@@ -96,14 +114,22 @@ export default function FramedataTable({
     baseColumns.startup,
     columnHelper.display({
       id: "hbc",
-      header: "NH/B/CH",
+      header: () => (
+        <p>
+          <span className={`px-1 ${hbcHeaderClassnames.hit}`}>H</span>/
+          <span className={`px-1 ${hbcHeaderClassnames.block}`}>B</span>/
+          <span className={`px-1 ${hbcHeaderClassnames.counter}`}>C</span>
+        </p>
+      ),
       cell: (info) => {
         const row = info.row.original;
         return (
           <>
-            <p>{row.hit}</p>
-            <p>{row.block}</p>
-            <p>{row.counter}</p>
+            <p className={hbcHeaderClassnames.hit}>{row.hit}</p>
+            {(row.block || row.counter) && <HorizontalDivider />}
+            <p className={hbcHeaderClassnames.block}>{row.block}</p>
+            {row.counter && <HorizontalDivider />}
+            <p className={hbcHeaderClassnames.counter}>{row.counter}</p>
           </>
         );
       },
@@ -116,6 +142,14 @@ export default function FramedataTable({
     columns: isMobile ? simpleColumns : fullColumns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  if (isLoading) {
+    return <Throbber />;
+  }
+
+  if (error) {
+    return <p>ERROR: {error}</p>;
+  }
 
   return (
     <div>
