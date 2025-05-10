@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Framedata } from "../__types/apiResponse";
+import FullScreenOverlay from "./FullScreenOverlay";
 
 type FramedataEditMenuProps = { framedata: Framedata };
 export default function FramedataEditMenu({
@@ -45,10 +46,8 @@ export default function FramedataEditMenu({
           ></button>
         </div>
       </div>
-      <dialog
-        className={`${showInterfaceOverlay ? "visible" : "hidden"} left-0 top-0 text-primaryText fixed w-screen h-screen bg-black/50 z-50 flex justify-center align-middle`}
-      >
-        <div>
+      {showInterfaceOverlay && (
+        <FullScreenOverlay>
           <button onClick={toggleEditInterface}>CLOSE</button>
           <h1>Editing</h1>
           <form
@@ -113,8 +112,8 @@ export default function FramedataEditMenu({
             <label htmlFor="input">Notes</label>
             <textarea name="input" id="input" defaultValue={framedata.input} />
           </form>
-        </div>
-      </dialog>
+        </FullScreenOverlay>
+      )}
     </>
   );
 }
