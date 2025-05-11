@@ -27,23 +27,23 @@ export default function FramedataEditMenu({
     <>
       <div className="h-fit relative [&_button]:w-8 [&_button]:h-8 [&_button]:flex [&_button]:items-center [&_button]:justify-center ">
         <div
-          className={`flex flex-col relative transition-all ${showMenu ? "[&_button]:drop-shadow-[0px_0px_10px_rgba(0,0,0,0.8)] [&_button]:opacity-100 [&_button]:pointer-events-auto" : "[&_button]:opacity-0 [&_button]:pointer-events-none"}`}
+          className={`flex flex-col relative transition-all [&_button]:z-20 [&_button]:transition-all [&_button]:absolute [&_button]:text-black [&_button]:rounded-full ${showMenu ? "[&_button]:drop-shadow-[0px_0px_10px_rgba(0,0,0,0.8)] [&_button]:opacity-100 [&_button]:pointer-events-auto" : "[&_button]:opacity-0 [&_button]:pointer-events-none"}`}
         >
           <button
             onClick={toggleEditInterface}
-            className={`z-20 transition-all absolute bg-green-400 text-black rounded-full ${showMenu ? "-translate-x-14" : "translate-y-0 translate-x-0"}`}
+            className={`bg-green-400 ${showMenu ? "-translate-x-14" : "translate-y-0 translate-x-0"}`}
           >
             <IoMdAdd />
           </button>
           <button
             onClick={toggleEditInterface}
-            className={`z-20 transition-all absolute bg-yellow-400 text-black rounded-full ${showMenu ? "translate-y-10 -translate-x-10" : "translate-y-0 translate-x-0"}`}
+            className={`bg-yellow-400 ${showMenu ? "translate-y-10 -translate-x-10" : "translate-y-0 translate-x-0"}`}
           >
             <MdEdit />
           </button>
           <button
             onClick={toggleEditInterface}
-            className={`z-20 transition-all absolute bg-red-400 text-black rounded-full ${showMenu ? "translate-y-14" : "translate-y-0 translate-x-0"}`}
+            className={`bg-red-400 ${showMenu ? "translate-y-14" : "translate-y-0 translate-x-0"}`}
           >
             <MdDelete />
           </button>
