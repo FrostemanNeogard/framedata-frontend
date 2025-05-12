@@ -33,6 +33,9 @@ export default function DeleteFramedataOverlay({
       `${import.meta.env.VITE_BASE_API_URL}suggestions`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       }
     );
