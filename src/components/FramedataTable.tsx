@@ -4,11 +4,13 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  Row,
   useReactTable,
 } from "@tanstack/react-table";
 import useScreenType from "../hooks/useScreenType";
 import HorizontalDivider from "./HorizontalDivider";
 import Throbber from "./Throbber";
+import FramedataEditMenu from "./FramedataNotes";
 
 type FramedataTableProps = {
   game: string;
@@ -79,7 +81,7 @@ export default function FramedataTable({
     notes: columnHelper.accessor("notes", {
       header: "Notes",
       cell: (info) => (
-        <ul>
+        <ul className="mr-auto">
           {info.getValue().map((note, index) => (
             <li key={`framedata-note-${index}`}>
               {note.endsWith(".") ? note : `${note}.`}
@@ -173,11 +175,17 @@ export default function FramedataTable({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row: Row<Framedata>) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="break-all">
+                <td
+                  key={cell.id}
+                  className={`break-all relative ${cell.column.id == "notes" && "flex"}`}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {cell.column.id == "notes" && (
+                    <FramedataEditMenu framedata={row.original} />
+                  )}
                 </td>
               ))}
             </tr>
