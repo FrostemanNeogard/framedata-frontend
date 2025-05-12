@@ -101,7 +101,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="input"
             id="input"
-            placeholder={`"d/f+2,1" etc...`}
+            placeholder={`Example: "d/f+2,1"`}
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
@@ -111,7 +111,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="hit-level"
             id="hit-level"
-            placeholder={`"m,h,l" etc...`}
+            placeholder={`Example: "m,h,l"`}
             value={hitLevel}
             onChange={(e) => setHitLevel(e.target.value)}
           />
@@ -121,7 +121,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="damage"
             id="damage"
-            placeholder="Start typing..."
+            placeholder={`Example: "10, 20"`}
             value={damage}
             onChange={(e) => setDamage(e.target.value)}
           />
@@ -131,7 +131,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="startup"
             id="startup"
-            placeholder="Start typing..."
+            placeholder={`Example: "i10"`}
             value={startup}
             onChange={(e) => setStartup(e.target.value)}
           />
@@ -141,7 +141,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="hit"
             id="hit"
-            placeholder="Start typing..."
+            placeholder={`Example: "+8"`}
             value={hit}
             onChange={(e) => setHit(e.target.value)}
           />
@@ -151,7 +151,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="block"
             id="block"
-            placeholder="Start typing..."
+            placeholder={`Example: "-5"`}
             value={block}
             onChange={(e) => setBlock(e.target.value)}
           />
@@ -161,7 +161,7 @@ export default function AddFramedataOverlay({
             type="text"
             name="counter"
             id="counter"
-            placeholder="Start typing..."
+            placeholder={`Example: "+12g"`}
             value={counter}
             onChange={(e) => setCounter(e.target.value)}
           />
@@ -170,7 +170,7 @@ export default function AddFramedataOverlay({
           <textarea
             name="input"
             id="input"
-            placeholder="Start typing..."
+            placeholder={`Separate notes on new lines`}
             value={notes.join("\n")}
             onChange={handleNoteChange}
           />
