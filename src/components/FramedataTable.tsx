@@ -185,7 +185,11 @@ export default function FramedataTable({
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   {cell.column.id == "notes" && (
-                    <FramedataEditMenu framedata={row.original} />
+                    <FramedataEditMenu
+                      framedata={row.original}
+                      game={game}
+                      character={character}
+                    />
                   )}
                 </td>
               ))}

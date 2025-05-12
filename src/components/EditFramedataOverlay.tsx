@@ -6,10 +6,14 @@ import { toast } from "react-toastify";
 
 type EditFramedataOverlayProps = {
   framedata: Framedata;
+  game: string;
+  character: string;
   callback: () => unknown;
 };
 export default function EditFramedataOverlay({
   framedata,
+  game,
+  character,
   callback,
 }: EditFramedataOverlayProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,8 +33,8 @@ export default function EditFramedataOverlay({
     const payload = {
       action: "modify",
       target: {
-        gameCode: "tekken8",
-        character: "alisa",
+        game,
+        character,
         input: framedata.input,
       },
       payload: {

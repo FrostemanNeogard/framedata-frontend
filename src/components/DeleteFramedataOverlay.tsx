@@ -6,10 +6,14 @@ import { toast } from "react-toastify";
 
 type DeleteFramedataOverlayProps = {
   framedata: Framedata;
+  game: string;
+  character: string;
   callback: () => unknown;
 };
 export default function DeleteFramedataOverlay({
   framedata,
+  game,
+  character,
   callback,
 }: DeleteFramedataOverlayProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -18,8 +22,8 @@ export default function DeleteFramedataOverlay({
     const payload = {
       action: "delete",
       target: {
-        gameCode: "tekken8",
-        character: "alisa",
+        game,
+        character,
         input: framedata.input,
       },
     };

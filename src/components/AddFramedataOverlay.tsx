@@ -6,10 +6,14 @@ import { toast } from "react-toastify";
 
 type AddFramedataOverlayProps = {
   framedata: Framedata;
+  game: string;
+  character: string;
   callback: () => unknown;
 };
 export default function AddFramedataOverlay({
   framedata,
+  game,
+  character,
   callback,
 }: AddFramedataOverlayProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,8 +34,8 @@ export default function AddFramedataOverlay({
     const payload = {
       action: "create",
       target: {
-        gameCode: "tekken8",
-        character: "alisa",
+        game,
+        character,
         input: framedata.input,
         insertAbove,
       },

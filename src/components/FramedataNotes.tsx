@@ -7,9 +7,15 @@ import EditFramedataOverlay from "./EditFramedataOverlay";
 import DeleteFramedataOverlay from "./DeleteFramedataOverlay";
 import AddFramedataOverlay from "./AddFramedataOverlay";
 
-type FramedataEditMenuProps = { framedata: Framedata };
+type FramedataEditMenuProps = {
+  framedata: Framedata;
+  game: string;
+  character: string;
+};
 export default function FramedataEditMenu({
   framedata,
+  game,
+  character,
 }: FramedataEditMenuProps) {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [showAddOverlay, setShowAddOverlay] = useState<boolean>(false);
@@ -69,18 +75,24 @@ export default function FramedataEditMenu({
       {showAddOverlay && (
         <AddFramedataOverlay
           framedata={framedata}
+          game={game}
+          character={character}
           callback={toggleAddInterface}
         />
       )}
       {showEditOverlay && (
         <EditFramedataOverlay
           framedata={framedata}
+          game={game}
+          character={character}
           callback={toggleEditInterface}
         />
       )}
       {showDeleteOverlay && (
         <DeleteFramedataOverlay
           framedata={framedata}
+          game={game}
+          character={character}
           callback={toggleDeleteInterface}
         />
       )}
