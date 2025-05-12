@@ -36,6 +36,7 @@ export default function FramedataTable({
 
       const data = await response.json();
       if (response.status == 200) {
+        setError(null);
         setFramedata(data);
       } else {
         setError(
@@ -84,7 +85,7 @@ export default function FramedataTable({
         <ul className="mr-auto">
           {info.getValue().map((note, index) => (
             <li key={`framedata-note-${index}`}>
-              {note.endsWith(".") ? note : `${note}.`}
+              {note.endsWith(".") ? note : `${note}`}
             </li>
           ))}
         </ul>
@@ -156,7 +157,7 @@ export default function FramedataTable({
   return (
     <div>
       <table
-        className={`w-full ${!isMobile && "table-fixed"} overflow-x-scroll [&_td]:py-1 [&_td]:border [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary`}
+        className={`w-full ${!isMobile && "table-fixed"} overflow-x-scroll [&_td]:py-1 [&_td]:border-r [&_td]:border-solid [&_td]:align-top [&_tr:nth-child(odd)]:bg-primary [&_tr:nth-child(even)_td]:border-primary [&_tr:nth-child(odd)_td]:border-secondary [&_tr:nth-child(even)]:bg-secondary`}
       >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -180,7 +181,7 @@ export default function FramedataTable({
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className={`break-all relative ${cell.column.id == "notes" && "flex"}`}
+                  className={`break-all relative ${cell.column.id == "notes" ? "flex !border-none" : ""}`}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   {cell.column.id == "notes" && (
