@@ -1,6 +1,6 @@
 export type Framedata = {
   input: string;
-  hit_level: string;
+  hitLevel: string;
   damage: string;
   startup: string;
   block: string;

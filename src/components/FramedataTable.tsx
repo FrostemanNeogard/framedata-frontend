@@ -55,7 +55,7 @@ export default function FramedataTable({
       header: "Input",
       cell: (info) => info.getValue(),
     }),
-    hitLevel: columnHelper.accessor("hit_level", {
+    hitLevel: columnHelper.accessor("hitLevel", {
       header: isMobile ? "Level" : "Hit Level",
       cell: (info) => info.getValue(),
     }),

@@ -41,7 +41,7 @@ export default function AddFramedataOverlay({
       },
       payload: {
         input,
-        hit_level: hitLevel,
+        hitLevel: hitLevel,
         damage,
         startup,
         hit,

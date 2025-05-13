@@ -19,7 +19,7 @@ export default function EditFramedataOverlay({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [input, setInput] = useState<string>(framedata.input);
-  const [hitLevel, setHitLevel] = useState<string>(framedata.hit_level);
+  const [hitLevel, setHitLevel] = useState<string>(framedata.hitLevel);
   const [damage, setDamage] = useState<string>(framedata.damage);
   const [startup, setStartup] = useState<string>(framedata.startup);
   const [hit, setHit] = useState<string>(framedata.hit);
@@ -39,7 +39,7 @@ export default function EditFramedataOverlay({
       },
       payload: {
         input,
-        hit_level: hitLevel,
+        hitLevel: hitLevel,
         damage,
         startup,
         hit,
