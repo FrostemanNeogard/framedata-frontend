@@ -11,3 +11,18 @@ export type Framedata = {
   alternateInputs: string[];
   categories: string[];
 };
+
+export type SuggestionTarget = {
+  game: string;
+  character: string;
+  input: string;
+};
+
+export type SuggestionPayload = Partial<Framedata>;
+
+export type Suggestion = {
+  _id: string;
+  action: string;
+  target: SuggestionTarget;
+  payload: SuggestionPayload;
+};
