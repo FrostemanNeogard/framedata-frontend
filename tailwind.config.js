@@ -6,6 +6,14 @@ export const colors = {
   primaryBright: "#323C45",
   secondary: "#F7F7F7",
   tertiary: "#658BAD",
+
+  success: "#90FF90",
+  warning: "#FFFF59",
+  danger: "#FF4D4D",
+
+  successDarkened: "#70DF80",
+  warningDarkened: "#DFDF39",
+  dangerDarkened: "#DF2F2F",
 };
 
 export default {
@@ -18,6 +26,14 @@ export default {
         secondary: colors.primaryBright,
         secondaryText: colors.primary,
         tertiary: colors.tertiary,
+
+        success: colors.success,
+        warning: colors.warning,
+        danger: colors.danger,
+
+        successDarkened: colors.successDarkened,
+        warningDarkened: colors.warningDarkened,
+        dangerDarkened: colors.dangerDarkened,
       },
       textColor: {
         primary: colors.secondary,
