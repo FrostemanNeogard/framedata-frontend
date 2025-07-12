@@ -23,12 +23,20 @@ export default function SuggestionDiffEntry({
     categories: [],
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       const { game, character, input } = suggestionData.target;
       const url = `${import.meta.env.VITE_BASE_API_URL}framedata/${game}/${character}/moves/${input}`;
       const res = await fetch(url);
+
+      if (res.status != 200) {
+        setError("Couldn't find data.");
+        setIsLoading(false);
+        return;
+      }
+
       const data = await res.json();
       setRealData(data[0]);
       setIsLoading(false);
@@ -37,6 +45,26 @@ export default function SuggestionDiffEntry({
 
   if (isLoading) {
     return <Throbber />;
+  }
+
+  console.log("Error:", error);
+
+  if (error != null) {
+    return (
+      <div>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  if (suggestionData.action == "delete") {
+    return (
+      <ReactDiffViewer
+        oldValue={JSON.stringify(realData, null, 2)}
+        newValue={JSON.stringify("", null, 2)}
+        splitView={true}
+      />
+    );
   }
 
   const fullSuggestion: Partial<Framedata> = {
