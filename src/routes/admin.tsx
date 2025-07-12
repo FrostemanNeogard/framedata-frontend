@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Suggestion } from "../__types/apiResponse";
 import Throbber from "../components/Throbber";
 import SuggestionDiffEntry from "../pages/admin/SuggestionDiffEntry";
+import Cookies from "universal-cookie";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -13,8 +14,13 @@ function RouteComponent() {
   const [isLoadingSuggestions, setIsLoadingSuggestions] =
     useState<boolean>(true);
   const [isLoadingApproval, setIsLoadingApproval] = useState<boolean>(false);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
+    const cookies = new Cookies();
+    const tokenCookie = cookies.get("accessToken");
+    setAccessToken(tokenCookie);
+
     (async () => {
       const url = `${import.meta.env.VITE_BASE_API_URL}suggestions`;
       const res = await fetch(url);
@@ -35,7 +41,12 @@ function RouteComponent() {
   const approveChange = async (id: string) => {
     setIsLoadingApproval(true);
     const res = await fetch(
-      `${import.meta.env.VITE_BASE_API_URL}suggestions/approve/${id}`
+      `${import.meta.env.VITE_BASE_API_URL}suggestions/approve/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
 
     if (res.status != 200) {
@@ -50,7 +61,13 @@ function RouteComponent() {
   const rejectChange = async (id: string) => {
     setIsLoadingApproval(true);
     const res = await fetch(
-      `${import.meta.env.VITE_BASE_API_URL}suggestions/reject/${id}`
+      `${import.meta.env.VITE_BASE_API_URL}suggestions/reject/${id}`,
+      {
+        method: "delete",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
     );
 
     if (res.status != 200) {
