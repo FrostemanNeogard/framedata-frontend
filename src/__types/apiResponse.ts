@@ -18,7 +18,10 @@ export type SuggestionTarget = {
   input: string;
 };
 
-export type SuggestionPayload = Partial<Framedata>;
+export type SuggestionPayload = {
+  data?: Partial<Framedata>;
+  index?: number;
+};
 
 export type Suggestion = {
   _id: string;

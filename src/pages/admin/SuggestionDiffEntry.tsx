@@ -47,8 +47,6 @@ export default function SuggestionDiffEntry({
     return <Throbber />;
   }
 
-  console.log("Error:", error);
-
   if (error != null) {
     return (
       <div>
@@ -68,15 +66,15 @@ export default function SuggestionDiffEntry({
   }
 
   const fullSuggestion: Partial<Framedata> = {
-    name: suggestionData.payload.name ?? realData.name,
-    input: suggestionData.payload.input ?? realData.input,
-    damage: suggestionData.payload.damage ?? realData.damage,
-    startup: suggestionData.payload.startup ?? realData.startup,
-    block: suggestionData.payload.block ?? realData.block,
-    hit: suggestionData.payload.hit ?? realData.hit,
-    counter: suggestionData.payload.counter ?? realData.counter,
-    notes: suggestionData.payload.notes ?? realData.notes,
-    hitLevel: suggestionData.payload.hitLevel ?? realData.hitLevel,
+    name: suggestionData.payload.data?.name ?? realData.name,
+    input: suggestionData.payload.data?.input ?? realData.input,
+    damage: suggestionData.payload.data?.damage ?? realData.damage,
+    startup: suggestionData.payload.data?.startup ?? realData.startup,
+    block: suggestionData.payload.data?.block ?? realData.block,
+    hit: suggestionData.payload.data?.hit ?? realData.hit,
+    counter: suggestionData.payload.data?.counter ?? realData.counter,
+    notes: suggestionData.payload.data?.notes ?? realData.notes,
+    hitLevel: suggestionData.payload.data?.hitLevel ?? realData.hitLevel,
   };
 
   const formattedRealData: Partial<Framedata> = { ...realData };
