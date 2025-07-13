@@ -25,7 +25,7 @@ export type SuggestionPayload = {
 
 export type Suggestion = {
   _id: string;
-  action: string;
+  action: "create" | "modify" | "delete";
   target: SuggestionTarget;
   payload: SuggestionPayload;
 };
