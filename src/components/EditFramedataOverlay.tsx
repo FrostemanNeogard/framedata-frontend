@@ -38,14 +38,16 @@ export default function EditFramedataOverlay({
         input: framedata.input,
       },
       payload: {
-        input,
-        hitLevel: hitLevel,
-        damage,
-        startup,
-        hit,
-        block,
-        counter,
-        notes,
+        data: {
+          input,
+          hitLevel: hitLevel,
+          damage,
+          startup,
+          hit,
+          block,
+          counter,
+          notes,
+        },
       },
     };
 

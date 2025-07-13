@@ -40,14 +40,16 @@ export default function AddFramedataOverlay({
         insertAbove,
       },
       payload: {
-        input,
-        hitLevel: hitLevel,
-        damage,
-        startup,
-        hit,
-        block,
-        counter,
-        notes,
+        data: {
+          input,
+          hitLevel: hitLevel,
+          damage,
+          startup,
+          hit,
+          block,
+          counter,
+          notes,
+        },
       },
     };
 
