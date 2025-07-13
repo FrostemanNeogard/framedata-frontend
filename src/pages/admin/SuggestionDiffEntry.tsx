@@ -10,6 +10,7 @@ export default function SuggestionDiffEntry({
   suggestionData,
 }: SuggestionDiffEntryProps) {
   const [realData, setRealData] = useState<Framedata>({
+    name: "",
     input: "",
     hitLevel: "",
     damage: "",
@@ -18,7 +19,6 @@ export default function SuggestionDiffEntry({
     hit: "",
     counter: "",
     notes: [],
-    name: "",
     alternateInputs: [],
     categories: [],
   });
@@ -26,13 +26,16 @@ export default function SuggestionDiffEntry({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
+    const fetchRealData = async () => {
       const { game, character, input } = suggestionData.target;
       const url = `${import.meta.env.VITE_BASE_API_URL}framedata/${game}/${character}/moves/${input}`;
       const res = await fetch(url);
 
       if (res.status != 200) {
-        setError("Couldn't find data.");
+        if (suggestionData.action != "create") {
+          setError("Couldn't find data.");
+        }
+
         setIsLoading(false);
         return;
       }
@@ -40,7 +43,13 @@ export default function SuggestionDiffEntry({
       const data = await res.json();
       setRealData(data[0]);
       setIsLoading(false);
-    })();
+    };
+
+    if (suggestionData.action != "create") {
+      fetchRealData();
+    } else {
+      setIsLoading(false);
+    }
   }, [suggestionData]);
 
   if (isLoading) {
@@ -77,9 +86,17 @@ export default function SuggestionDiffEntry({
     hitLevel: suggestionData.payload.data?.hitLevel ?? realData.hitLevel,
   };
 
-  const formattedRealData: Partial<Framedata> = { ...realData };
-  delete formattedRealData.alternateInputs;
-  delete formattedRealData.categories;
+  const formattedRealData: Partial<Framedata> = {
+    name: realData.name,
+    input: realData.input,
+    damage: realData.damage,
+    startup: realData.startup,
+    block: realData.block,
+    hit: realData.hit,
+    counter: realData.counter,
+    notes: realData.notes,
+    hitLevel: realData.hitLevel,
+  };
 
   return (
     <ReactDiffViewer
