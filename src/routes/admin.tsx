@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Suggestion } from "../__types/apiResponse";
 import Throbber from "../components/Throbber";
 import SuggestionDiffEntry from "../pages/admin/SuggestionDiffEntry";
-import Cookies from "universal-cookie";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -17,9 +16,7 @@ function RouteComponent() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const cookies = new Cookies();
-    const tokenCookie = cookies.get("accessToken");
-    setAccessToken(tokenCookie);
+    setAccessToken("");
 
     (async () => {
       const url = `${import.meta.env.VITE_BASE_API_URL}suggestions`;
@@ -34,8 +31,8 @@ function RouteComponent() {
     return <Throbber />;
   }
 
-  const popSuggestion = () => {
-    setSuggestionsData(suggestionsData.slice(1));
+  const removeSuggestionById = (id: string) => {
+    setSuggestionsData((prev) => prev.filter((e) => e._id != id));
   };
 
   const approveChange = async (id: string) => {
@@ -54,7 +51,7 @@ function RouteComponent() {
       return;
     }
 
-    popSuggestion();
+    removeSuggestionById(id);
     setIsLoadingApproval(false);
   };
 
@@ -75,7 +72,7 @@ function RouteComponent() {
       return;
     }
 
-    popSuggestion();
+    removeSuggestionById(id);
     setIsLoadingApproval(false);
   };
 
