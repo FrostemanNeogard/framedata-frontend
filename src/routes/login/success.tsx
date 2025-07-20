@@ -1,5 +1,6 @@
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 type LoginSuccessSearch = {
   token: string;
@@ -20,12 +21,9 @@ export const Route = createFileRoute("/login/success")({
 function RouteComponent() {
   const { token } = useSearch({ from: "/login/success" });
 
-  useEffect(() => {}, [token]);
+  useEffect(() => {
+    Cookies.set("accessToken", token, { expires: 7 });
+  }, [token]);
 
-  return (
-    <div>
-      Logged in successfully
-      <button onClick={() => {}}>Show cookie</button>
-    </div>
-  );
+  return <div>Logged in successfully</div>;
 }

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Suggestion } from "../__types/apiResponse";
 import Throbber from "../components/Throbber";
 import SuggestionDiffEntry from "../pages/admin/SuggestionDiffEntry";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -16,7 +18,14 @@ function RouteComponent() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    setAccessToken("");
+    const token = Cookies.get("accessToken");
+
+    if (!token) {
+      toast.error("Missing access token. Please refresh your login.");
+    } else {
+      console.log("Access token found:", token);
+      setAccessToken(token);
+    }
 
     (async () => {
       const url = `${import.meta.env.VITE_BASE_API_URL}suggestions`;
