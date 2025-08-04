@@ -16,6 +16,8 @@ function RouteComponent() {
     useState<boolean>(true);
   const [isLoadingApproval, setIsLoadingApproval] = useState<boolean>(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [maxPages, setMaxPages] = useState<number>(0);
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -23,18 +25,18 @@ function RouteComponent() {
     if (!token) {
       toast.error("Missing access token. Please refresh your login.");
     } else {
-      console.log("Access token found:", token);
       setAccessToken(token);
     }
 
     (async () => {
-      const url = `${import.meta.env.VITE_BASE_API_URL}suggestions`;
+      const url = `${import.meta.env.VITE_BASE_API_URL}suggestions?page=${currentPage}`;
       const res = await fetch(url);
       const data = await res.json();
-      setSuggestionsData(data);
+      setMaxPages(data.pagination.totalPages);
+      setSuggestionsData(data.data);
       setIsLoadingSuggestions(false);
     })();
-  }, []);
+  }, [currentPage]);
 
   if (isLoadingSuggestions) {
     return <Throbber />;
@@ -55,8 +57,13 @@ function RouteComponent() {
       }
     );
 
+    if (res.status == 401) {
+      toast.error("You do not have permissions to perform this action.");
+      return;
+    }
+
     if (res.status != 200) {
-      console.error("Couldn't approve request");
+      toast.error("An error ocurred. Please try again later.");
       return;
     }
 
@@ -76,8 +83,13 @@ function RouteComponent() {
       }
     );
 
+    if (res.status == 401) {
+      toast.error("You do not have permissions to perform this action.");
+      return;
+    }
+
     if (res.status != 200) {
-      console.error("Couldn't reject request");
+      toast.error("An error ocurred. Please try again later.");
       return;
     }
 
@@ -85,8 +97,37 @@ function RouteComponent() {
     setIsLoadingApproval(false);
   };
 
+  const incrementPage = () => {
+    if (currentPage < maxPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const decrementPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
   return (
     <div className="grid gap-3">
+      <div className="flex gap-2 text-l">
+        <button
+          disabled={currentPage <= 1}
+          onClick={decrementPage}
+          className={`rounded p-1 px-2 ${currentPage <= 1 ? "bg-primary" : "bg-secondary hover:bg-secondaryDarkened"}`}
+        >
+          &lt;
+        </button>
+        <span className="text-xl">{currentPage}</span>
+        <button
+          disabled={currentPage >= maxPages}
+          onClick={incrementPage}
+          className={`rounded p-1 px-2 ${currentPage >= maxPages ? "bg-primary" : "bg-secondary hover:bg-secondaryDarkened"}`}
+        >
+          &gt;
+        </button>
+      </div>
       {suggestionsData.map((data, i) => (
         <div
           key={`suggestion-diff-${i}`}
