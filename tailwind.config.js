@@ -5,6 +5,7 @@ export const colors = {
   primary: "#21282E",
   primaryBright: "#323C45",
   secondary: "#F7F7F7",
+  secondaryDarkened: "#A7A7A7",
   tertiary: "#658BAD",
 
   success: "#90FF90",
@@ -24,6 +25,7 @@ export default {
         primary: colors.primary,
         primaryText: colors.secondary,
         secondary: colors.primaryBright,
+        secondaryDarkened: colors.secondaryDarkened,
         secondaryText: colors.primary,
         tertiary: colors.tertiary,
 
