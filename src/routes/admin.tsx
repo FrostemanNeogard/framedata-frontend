@@ -18,6 +18,8 @@ function RouteComponent() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState<number>(0);
+  const [totalSuggestions, setTotalSuggestions] = useState<number>(0);
+  const [shouldRefresh, setShouldRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -35,8 +37,9 @@ function RouteComponent() {
       setMaxPages(data.pagination.totalPages);
       setSuggestionsData(data.data);
       setIsLoadingSuggestions(false);
+      setTotalSuggestions(data.pagination.totalEntries);
     })();
-  }, [currentPage]);
+  }, [currentPage, shouldRefresh]);
 
   if (isLoadingSuggestions) {
     return <Throbber />;
@@ -44,6 +47,11 @@ function RouteComponent() {
 
   const removeSuggestionById = (id: string) => {
     setSuggestionsData((prev) => prev.filter((e) => e._id != id));
+    setTotalSuggestions((prev) => prev - 1);
+
+    if (suggestionsData.length <= 1) {
+      setShouldRefresh((prev) => !prev);
+    }
   };
 
   const approveChange = async (id: string) => {
@@ -127,6 +135,7 @@ function RouteComponent() {
         >
           &gt;
         </button>
+        <h1>Remaining: {totalSuggestions}</h1>
       </div>
       {suggestionsData.map((data, i) => (
         <div
